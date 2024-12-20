@@ -8,10 +8,12 @@ import json
 import random
 import openai
 import time 
-
+from openai import OpenAI
 from utils import *
 
 openai.api_key = openai_api_key
+
+client = OpenAI(api_key= deepseek_api_key , base_url="https://api.deepseek.com")
 
 def temp_sleep(seconds=0.1):
   time.sleep(seconds)
@@ -277,7 +279,7 @@ def get_embedding(text, model="text-embedding-ada-002"):
   text = text.replace("\n", " ")
   if not text: 
     text = "this is blank"
-  return openai.Embedding.create(
+  return client.embeddings.create(
           input=[text], model=model)['data'][0]['embedding']
 
 
